@@ -52,14 +52,22 @@ public class Datastore {
    * @return a list of messages posted by the user, or empty list if user has never posted a
    *     message. List is sorted by time descending.
    */
-  public List<Message> getMessages(String user) {
+  public List<Message> getMessages(String user, boolean getAllMessages) {
     List<Message> messages = new ArrayList<>();
 
-    Query query =
-        new Query("Message")
+    Query query;
+    PreparedQuery results;
+
+    if(getAllMessages == true){
+      query = new Query("Message")
+            .addSort("timestamp", SortDirection.DESCENDING);
+    }else{
+      query = new Query("Message")
             .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
             .addSort("timestamp", SortDirection.DESCENDING);
-    PreparedQuery results = datastore.prepare(query);
+    }
+
+    results = datastore.prepare(query);
 
     for (Entity entity : results.asIterable()) {
       try {
