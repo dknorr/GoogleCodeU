@@ -66,7 +66,7 @@ public class Datastore {
         UUID id = UUID.fromString(idString);
         String text = (String) entity.getProperty("text");
         long timestamp = (long) entity.getProperty("timestamp");
-        String recipient = (String) entity.getProperty("string");
+        String recipient = (String) entity.getProperty("recipient");
 
         Message message = new Message(id, user, text, timestamp, recipient);
         messages.add(message);
