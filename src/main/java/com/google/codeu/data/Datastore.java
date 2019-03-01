@@ -87,4 +87,16 @@ public class Datastore {
     PreparedQuery results = datastore.prepare(query);
     return results.countEntities(FetchOptions.Builder.withLimit(1000));
   }
+
+  public float getMessageAverageLength(){
+    Query query = new Query("Message");
+    PreparedQuery results = datastore.prepare(query);
+    int totalMessages = results.countEntities(FetchOptions.Builder.withLimit(1000));
+    int lengthSum = 0;
+    for (Entity entity : results.asIterable()) {
+      String currentMessage = (String) entity.getProperty("text");
+      lengthSum += currentMessage.length();
+    }
+    return lengthSum/totalMessages;
+  }
 }
