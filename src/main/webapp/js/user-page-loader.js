@@ -119,4 +119,4 @@ function buildUI() {
   showMessageForm();
   fetchMessages();
   fetchAboutMe();
-
+}
