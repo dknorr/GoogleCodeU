@@ -90,7 +90,7 @@ public class Datastore {
     return results.countEntities(FetchOptions.Builder.withLimit(1000));
   }
 
-  public float getMessageAverageLength(){
+  public double getMessageAverageLength(){
     Query query = new Query("Message");
     PreparedQuery results = datastore.prepare(query);
     int totalMessages = results.countEntities(FetchOptions.Builder.withLimit(1000));
