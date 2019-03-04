@@ -33,6 +33,7 @@ function setPageTitle() {
  * Shows the message form if the user is logged in and viewing their own page.
  */
 
+
 function showMessageForm() {
   //Also will show about me if on one's own page
   fetch("/login-status")
