@@ -47,13 +47,13 @@ public class Datastore {
 
     datastore.put(messageEntity);
   }
-  
-    /**
+
+  /**
    * Gets messages helper used by getMessages() and getAllMessages()
    *
    * @return a list of messages included in some PreparedQuery results
    */
-  
+
   public List<Message> getMessagesHelper(PreparedQuery results) {
     List<Message> messages = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
@@ -76,15 +76,14 @@ public class Datastore {
     return messages;
   }
 
-
   /** Returns the total number of messages for all users. */
-  public int getTotalMessageCount(){
+  public int getTotalMessageCount() {
     Query query = new Query("Message");
     PreparedQuery results = datastore.prepare(query);
     return results.countEntities(FetchOptions.Builder.withLimit(1000));
   }
 
-  public double getMessageAverageLength(){
+  public double getMessageAverageLength() {
     Query query = new Query("Message");
     PreparedQuery results = datastore.prepare(query);
     int totalMessages = results.countEntities(FetchOptions.Builder.withLimit(1000));
@@ -93,8 +92,9 @@ public class Datastore {
       String currentMessage = (String) entity.getProperty("text");
       lengthSum += currentMessage.length();
     }
-    return lengthSum/totalMessages;
+    return lengthSum / totalMessages;
   }
+
   /** Stores the User in Datastore. */
   public void storeUser(User user) {
     Entity userEntity = new Entity("User", user.getEmail());
@@ -102,34 +102,33 @@ public class Datastore {
     userEntity.setProperty("aboutMe", user.getAboutMe());
     datastore.put(userEntity);
   }
-   
+
   /**
-  * Returns the User owned by the email address, or
-  * null if no matching User was found.
-  */
+   * Returns the User owned by the email address, or null if no matching User was
+   * found.
+   */
   public User getUser(String email) {
-   
-    Query query = new Query("User")
-      .setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
+
+    Query query = new Query("User").setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
     PreparedQuery results = datastore.prepare(query);
     Entity userEntity = results.asSingleEntity();
-    if(userEntity == null) {
-     return null;
+    if (userEntity == null) {
+      return null;
     }
-    
+
     String aboutMe = (String) userEntity.getProperty("aboutMe");
     User user = new User(email, aboutMe);
-    
+
     return user;
   }
- 
+
   /**
    * Gets messages posted by a specific user.
    *
    * @return a list of messages posted by the user, or empty list if user has
    *         never posted a message. List is sorted by time descending.
    */
-public List<Message> getMessages(String recipient) {
+  public List<Message> getMessages(String recipient) {
     Query query = new Query("Message")
         .setFilter(new Query.FilterPredicate("recipient", FilterOperator.EQUAL, recipient))
         .addSort("timestamp", SortDirection.DESCENDING);
@@ -137,7 +136,8 @@ public List<Message> getMessages(String recipient) {
 
     return getMessagesHelper(results);
   }
- public List<Message> getAllMessages() {
+
+  public List<Message> getAllMessages() {
 
     Query query = new Query("Message").addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
