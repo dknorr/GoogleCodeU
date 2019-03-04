@@ -46,27 +46,21 @@ public class Datastore {
 
     datastore.put(messageEntity);
   }
-
-  /**
-   * Gets messages posted by a specific user.
+  
+    /**
+   * Gets messages helper used by getMessages() and getAllMessages()
    *
-   * @return a list of messages posted by the user, or empty list if user has
-   *         never posted a message. List is sorted by time descending.
+   * @return a list of messages included in some PreparedQuery results
    */
-  public List<Message> getMessages(String recipient) {
+  
+  public List<Message> getMessagesHelper(PreparedQuery results) {
     List<Message> messages = new ArrayList<>();
-
-    Query query = new Query("Message")
-        .setFilter(new Query.FilterPredicate("recipient", FilterOperator.EQUAL, recipient))
-        .addSort("timestamp", SortDirection.DESCENDING);
-    PreparedQuery results = datastore.prepare(query);
-
     for (Entity entity : results.asIterable()) {
       try {
         String idString = entity.getKey().getName();
         UUID id = UUID.fromString(idString);
         String user = (String) entity.getProperty("user");
-
+        String recipient = (String) entity.getProperty("recipient");
         String text = (String) entity.getProperty("text");
         long timestamp = (long) entity.getProperty("timestamp");
 
@@ -78,7 +72,28 @@ public class Datastore {
         e.printStackTrace();
       }
     }
-
     return messages;
+  }
+ 
+  /**
+   * Gets messages posted by a specific user.
+   *
+   * @return a list of messages posted by the user, or empty list if user has
+   *         never posted a message. List is sorted by time descending.
+   */
+public List<Message> getMessages(String recipient) {
+    Query query = new Query("Message")
+        .setFilter(new Query.FilterPredicate("recipient", FilterOperator.EQUAL, recipient))
+        .addSort("timestamp", SortDirection.DESCENDING);
+    PreparedQuery results = datastore.prepare(query);
+
+    return getMessagesHelper(results);
+  }
+ public List<Message> getAllMessages() {
+
+    Query query = new Query("Message").addSort("timestamp", SortDirection.DESCENDING);
+    PreparedQuery results = datastore.prepare(query);
+
+    return getMessagesHelper(results);
   }
 }
