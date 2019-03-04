@@ -42,41 +42,29 @@ public class Datastore {
     messageEntity.setProperty("user", message.getUser());
     messageEntity.setProperty("text", message.getText());
     messageEntity.setProperty("timestamp", message.getTimestamp());
+    messageEntity.setProperty("recipient", message.getRecipient());
 
     datastore.put(messageEntity);
   }
-
-  /**
-   * Gets messages posted by a specific user.
+  
+    /**
+   * Gets messages helper used by getMessages() and getAllMessages()
    *
-   * @return a list of messages posted by the user, or empty list if user has never posted a
-   *     message. List is sorted by time descending.
+   * @return a list of messages included in some PreparedQuery results
    */
-  public List<Message> getMessages(String user, boolean getAllMessages) {
+  
+  public List<Message> getMessagesHelper(PreparedQuery results) {
     List<Message> messages = new ArrayList<>();
-
-    Query query;
-    PreparedQuery results;
-
-    if(getAllMessages == true){
-      query = new Query("Message")
-            .addSort("timestamp", SortDirection.DESCENDING);
-    }else{
-      query = new Query("Message")
-            .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
-            .addSort("timestamp", SortDirection.DESCENDING);
-    }
-
-    results = datastore.prepare(query);
-
     for (Entity entity : results.asIterable()) {
       try {
         String idString = entity.getKey().getName();
         UUID id = UUID.fromString(idString);
+        String user = (String) entity.getProperty("user");
+        String recipient = (String) entity.getProperty("recipient");
         String text = (String) entity.getProperty("text");
         long timestamp = (long) entity.getProperty("timestamp");
 
-        Message message = new Message(id, user, text, timestamp);
+        Message message = new Message(id, user, text, timestamp, recipient);
         messages.add(message);
       } catch (Exception e) {
         System.err.println("Error reading message.");
@@ -84,7 +72,28 @@ public class Datastore {
         e.printStackTrace();
       }
     }
-
     return messages;
+  }
+ 
+  /**
+   * Gets messages posted by a specific user.
+   *
+   * @return a list of messages posted by the user, or empty list if user has
+   *         never posted a message. List is sorted by time descending.
+   */
+public List<Message> getMessages(String recipient) {
+    Query query = new Query("Message")
+        .setFilter(new Query.FilterPredicate("recipient", FilterOperator.EQUAL, recipient))
+        .addSort("timestamp", SortDirection.DESCENDING);
+    PreparedQuery results = datastore.prepare(query);
+
+    return getMessagesHelper(results);
+  }
+ public List<Message> getAllMessages() {
+
+    Query query = new Query("Message").addSort("timestamp", SortDirection.DESCENDING);
+    PreparedQuery results = datastore.prepare(query);
+
+    return getMessagesHelper(results);
   }
 }
