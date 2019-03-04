@@ -16,6 +16,7 @@
 
 package com.google.codeu.data;
 
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -75,6 +76,25 @@ public class Datastore {
     return messages;
   }
 
+
+  /** Returns the total number of messages for all users. */
+  public int getTotalMessageCount(){
+    Query query = new Query("Message");
+    PreparedQuery results = datastore.prepare(query);
+    return results.countEntities(FetchOptions.Builder.withLimit(1000));
+  }
+
+  public double getMessageAverageLength(){
+    Query query = new Query("Message");
+    PreparedQuery results = datastore.prepare(query);
+    int totalMessages = results.countEntities(FetchOptions.Builder.withLimit(1000));
+    int lengthSum = 0;
+    for (Entity entity : results.asIterable()) {
+      String currentMessage = (String) entity.getProperty("text");
+      lengthSum += currentMessage.length();
+    }
+    return lengthSum/totalMessages;
+  }
   /** Stores the User in Datastore. */
   public void storeUser(User user) {
     Entity userEntity = new Entity("User", user.getEmail());
