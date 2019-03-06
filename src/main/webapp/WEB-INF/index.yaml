@@ -13,8 +13,9 @@
 # limitations under the License.
 
 indexes:
-- kind: Message
-  properties:
-  - name: user
-  - name: timestamp
-    direction: desc
+  - kind: Message
+    properties:
+      - name: user
+      - name: recipient
+      - name: timestamp
+        direction: desc
