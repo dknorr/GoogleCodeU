@@ -1,17 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <!-- Loading the Maps Library JS -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBudEHzg6ga8iEbBCL0U-Cmx35Vp33Swlc"></script>
+  <!-- Calling Map constructor, passing it to div element "map", & giving "map" a center and a zoom -->
+  <script>
+  let map;
+  function createMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: 37.422, lng: -122.084},
+      zoom: 16
+    });
+  }
+  </script>
 
+  <!-- Map styling and title -->
   <title>Map Project</title>
   <style>
     #map {
       width: 500px;
       height: 500px;
-      border: thin solid black;
+      border: thin solid pink;
     }
   </style>
 </head>
-<body>
+
+<!-- Calling createMap function -->
+<body onload ="createMap();">
   <h1>Map Project</h1>
   <div id="map"></div>
 </body>
