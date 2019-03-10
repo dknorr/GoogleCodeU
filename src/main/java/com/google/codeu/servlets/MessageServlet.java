@@ -83,7 +83,7 @@ public class MessageServlet extends HttpServlet {
       String recipient = request.getParameter("recipient");
 
       //use regex to replace image URLs with <img> elements
-      String regex = "(https?://\\S+\\.(png|jpg))";
+      String regex = "(https?://\\S+\\.(png|jpg|gif))";
       String replacement = "<img src=\"$1\" />";
       String textWithImagesReplaced = userText.replaceAll(regex, replacement);
       Message message = new Message(user, textWithImagesReplaced, recipient);
