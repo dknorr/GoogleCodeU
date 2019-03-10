@@ -1,0 +1,6 @@
+/* Set the size of the div element that contains the map */
+#map {
+  width: 500px;
+  height: 500px;
+  border: thin solid pink;
+}
