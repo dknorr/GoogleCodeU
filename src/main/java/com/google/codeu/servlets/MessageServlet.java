@@ -86,6 +86,20 @@ public class MessageServlet extends HttpServlet {
       String regex = "(https?://\\S+\\.(png|jpg|gif))";
       String replacement = "<img src=\"$1\" />";
       String textWithImagesReplaced = userText.replaceAll(regex, replacement);
+
+      //use regex to replace video URLS with <video elements>
+      if(userText.contains("https://www.youtube.com/watch?v=")){
+        String video_id = userText.split("v=")[1];
+        int ampersandPosition = video_id.indexOf('&');
+        if(ampersandPosition != -1) {
+          video_id = video_id.substring(0, ampersandPosition);
+        }
+        regex = "^(https?\\:\\/\\/)?(www\\.youtube\\.com|youtu\\.?be)\\/.+$";
+        replacement = "<iframe src= http://www.youtube.com/embed/" + video_id + "/>";
+      }
+      
+      textWithImagesReplaced = userText.replaceAll(regex, replacement);
+
       Message message = new Message(user, textWithImagesReplaced, recipient);
       response.sendRedirect("/user-page.html?user=" + recipient);
 
