@@ -97,6 +97,12 @@ public class MessageServlet extends HttpServlet {
         regex = "^(https?\\:\\/\\/)?(www\\.youtube\\.com|youtu\\.?be)\\/.+$";
         replacement = "<iframe src= http://www.youtube.com/embed/" + video_id + "/>";
       }
+
+      //use regex to replace audio files with <audio> elements
+      if(userText.contains("wav") || userText.contains("mp3") || userText.contains("mp4")){
+        regex = "(https?://\\S+\\.(wav|mp3|mp4))";
+        replacement = "<audio controls> <source src=\"" +userText+ "\"/> </audio>" ;
+      }
       
       textWithImagesReplaced = userText.replaceAll(regex, replacement);
 
