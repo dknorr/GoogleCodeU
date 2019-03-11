@@ -7,8 +7,9 @@
         src="https://www.gstatic.com/charts/loader.js"
       ></script>
       <script type="text/javascript">
-        google.charts.load("current", { packages: ["corechart"] });
+        google.charts.load("current", { packages: ["corechart", "geochart"] });
         google.charts.setOnLoadCallback(drawChart);
+        google.charts.setOnLoadCallback(drawRegionsMap);
         function drawChart() {
           //new DataTable instance
           var book_data = new google.visualization.DataTable();
@@ -27,10 +28,29 @@
             document.getElementById("book_chart")
           );
           var chart_options = {
-            width: 800,
-            height: 400
+            "width": 800,
+            "height": 400
           };
           chart.draw(book_data, chart_options);
+        }
+        function drawRegionsMap() {
+          var data = google.visualization.arrayToDataTable([
+            ["Country", "Popularity"],
+            ["Germany", 200],
+            ["United States", 300],
+            ["Sweden", 450],
+            ["Brazil", 400],
+            ["Canada", 500],
+            ["France", 600],
+            ["RU", 700]
+          ]);
+          var options = { "title": "Multilingual education around the World" };
+
+          var chart = new google.visualization.GeoChart(
+            document.getElementById("regions_div")
+          );
+
+          chart.draw(data, options);
         }
       </script>
       <title>A New Chart</title>
@@ -38,7 +58,10 @@
 
     <body>
       <h1>Chart Project</h1>
+      <h2>Demo Chart</h2>
       <div id="book_chart"></div>
+      <h2>Multilingual countries</h2>
+      <div id="regions_div"></div>
     </body>
   </div>
 </html>
