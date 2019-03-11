@@ -1,26 +1,27 @@
-let map;
-
+/** Creates a map that shows gyms near the Googleplex. */
 function createMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
+  const map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 37.422, lng: -122.084}, // Gives div element "map" a default center on coordinates of Googleplex
-    zoom: 16
+    zoom: 13
   });
 
-  /* Creating pin indicating exact location of Stan T-Rex statue on Google campus */
-  var pinkMarkerIcon = 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png';
-  const trexMarker = new google.maps.Marker({
-    position: {lat: 37.421903, lng: -122.084674},
+    addGymLocation(map, 37.414830, -122.090050, 'Fit4life', 'Treadmills. Bikes. Ellipticals. Weights ...And much more!'),
+    addGymLocation(map, 37.410702, -122.084671, 'Whisman Sports Center', 'Onsite gymnasium and outdoor multi-use sports fields with lighting.'),
+    addGymLocation(map, 37.402460, -122.109860, '24 Hour Fitness', 'Includes fitness classes, premium gym amenities and is open 24/7.');
+}
+
+/** Adds a marker indicating gym location that shows an InfoWindow when clicked. */
+function addGymLocation(map, lat, lng, title, description) {
+  const marker = new google.maps.Marker({
+    position: {lat: lat, lng: lng},
     map: map,
-    icon: pinkMarkerIcon,
-    title: 'Stan the T-Rex'
+    title: title
   });
-
-  /* Displays InfoWindow above marker after clicking on marker */
-  var trexInfoWindow = new google.maps.InfoWindow({
-    content: 'This is Stan, the T-Rex statue.'
+      
+  var infoWindow = new google.maps.InfoWindow({
+    content: description
   });
-
-  trexMarker.addListener('click', function() {
-    trexInfoWindow.open(map, trexMarker);
+  marker.addListener('click', function() {
+    infoWindow.open(map, marker);
   });
 }
