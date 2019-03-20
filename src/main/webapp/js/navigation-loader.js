@@ -35,17 +35,19 @@ function addLoginOrLogoutLinkToNavigation() {
           createListItem(
             createLink(
               "/user-page.html?user=" + loginStatus.username,
-              "Your Page"
-            )
+              "Your Page",
+              "nav-link"
+            ),
+            ["nav-item", "active"]
           )
         );
 
         navigationElement.appendChild(
-          createListItem(createLink("/logout", "Logout"))
+          createListItem(createLink("/logout", "Logout", "nav-link"), ["nav-item", "active"])
         );
       } else {
         navigationElement.appendChild(
-          createListItem(createLink("/login", "Login"))
+          createListItem(createLink("/login", "Login", "nav-link"), ["nav-item", "active"])
         );
       }
     });
@@ -56,9 +58,15 @@ function addLoginOrLogoutLinkToNavigation() {
  * @param {Element} childElement
  * @return {Element} li element
  */
-function createListItem(childElement) {
+function createListItem(childElement, elClass) {
   const listItemElement = document.createElement("li");
   listItemElement.appendChild(childElement);
+  if (elClass){
+    for (var i = 0;i < elClass.length;i++){
+      listItemElement.classList.add(elClass[i]);
+    }
+    
+  }
   return listItemElement;
 }
 
@@ -68,10 +76,13 @@ function createListItem(childElement) {
  * @param {string} text
  * @return {Element} Anchor element
  */
-function createLink(url, text) {
+function createLink(url, text, elClass) {
   const linkElement = document.createElement("a");
   linkElement.appendChild(document.createTextNode(text));
   linkElement.href = url;
+  if (elClass){
+    linkElement.classList.add(elClass);
+  }
   return linkElement;
 }
 
