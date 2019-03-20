@@ -119,17 +119,23 @@ function fetchAboutMe() {
 
 function buildLanguageLinks(){
   const userPageUrl = '/user-page.html?user=' + parameterUsername;
-  const languagesListElement  = document.getElementById('languages');
-  languagesListElement.appendChild(createListItem(createLink(
-       userPageUrl + '&language=en', 'English')));
-  languagesListElement.appendChild(createListItem(createLink(
-      userPageUrl + '&language=zh', 'Chinese')));
-  languagesListElement.appendChild(createListItem(createLink(
-      userPageUrl + '&language=hi', 'Hindi')));
-  languagesListElement.appendChild(createListItem(createLink(
-      userPageUrl + '&language=es', 'Spanish')));
-  languagesListElement.appendChild(createListItem(createLink(
-      userPageUrl + '&language=ar', 'Arabic')));
+  const languagesListElement  = document.getElementById("languages");
+  languagesListElement.appendChild(createLink(
+       userPageUrl + '&language=en', 'English'));
+  languagesListElement.appendChild(createLink(
+      userPageUrl + '&language=zh', 'Chinese'));
+  languagesListElement.appendChild(createLink(
+      userPageUrl + '&language=hi', 'Hindi'));
+  languagesListElement.appendChild(createLink(
+      userPageUrl + '&language=es', 'Spanish'));
+  languagesListElement.appendChild(createLink(
+      userPageUrl + '&language=ar', 'Arabic'));
+      
+  var elements = languagesListElement.childNodes;
+  for (var i = 1;i < elements.length;i++){
+    var current = elements[i];
+    current.classList.add("dropdown-item");
+  }
 }
 
 /** Fetches data and populates the UI of the page. */
