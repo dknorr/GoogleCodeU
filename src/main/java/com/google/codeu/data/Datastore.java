@@ -137,10 +137,21 @@ public class Datastore {
     return getMessagesHelper(results);
   }
 
-//  public List<Message> getConversation(String user1, String user2) {
-//    Query query = new Query("Message")
-//            .setFilter(new Query.FilterPredicate("recipient", FilterOperator.
-//  }
+  public List<Message> getConversation(String user1, String user2) {
+    ArrayList<String> users = new ArrayList<>();
+    users.add(user1);
+    users.add(user2);
+    Query.Filter user =
+            new Query.FilterPredicate("user", FilterOperator.IN, users);
+    Query.Filter recipient =
+            new Query.FilterPredicate("recipient", FilterOperator.IN, users);
+    Query.CompositeFilter usersFilter =
+            Query.CompositeFilterOperator.and(user, recipient);
+    Query query = new Query("Message").setFilter(usersFilter);
+    PreparedQuery results = datastore.prepare(query);
+
+    return getMessagesHelper(results);
+  }
 
   public List<Message> getAllMessages() {
 
