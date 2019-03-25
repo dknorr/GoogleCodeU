@@ -63,4 +63,8 @@ public class Message {
   public String getRecipient() {
     return recipient;
   }
+
+  public void setText(String translation){
+    this.text = translation;
+  }
 }

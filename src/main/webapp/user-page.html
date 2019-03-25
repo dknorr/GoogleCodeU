@@ -19,42 +19,65 @@ limitations under the License.
   <head>
     <title>User Page</title>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/user-page.css" />
+    <script src="/js/navigation-loader.js"></script>
     <script src="/js/user-page-loader.js"></script>
   </head>
   <body onload="buildUI();">
-    <nav>
-      <ul id="navigation">
-        <li><a href="/">Home</a></li>
-      </ul>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Rumor VonFlip</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+      </div>
     </nav>
-    <h1 id="page-title">User Page</h1>
-
-    <form id="message-form" action="/messages" method="POST" class="hidden">
-      Enter a new message:
-      <br />
-      <textarea name="text" id="message-input"></textarea>
-      <br />
-      <input type="submit" value="Submit" />
-    </form>
-    <hr />
-
-    <div id="message-container">Loading...????</div>
-
-    <!-- About Me description -->
-    <div id="about-me-container">Loading...!!!!!</div>
-    <div id="about-me-form" class="hidden">
-      <form action="/about" method="POST">
-        <textarea
-          name="about-me"
-          placeholder="about me"
-          rows="4"
-          required
-        ></textarea>
-        <br />
-        <input type="submit" value="Submit" />
+    <div class="container" style = "text-align: center">
+      <div class="row justify-content-center">
+        <h1 id="page-title" >User Page</h1>
+      </div>
+      <div class="row justify-content-center">
+        <div class="dropdown" align="center">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Message's language
+          </button>
+          <div id="languages" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          </div>
+        </div>
+      </div>
+      
+      <form id="message-form" action="/messages" method="POST" class="hidden">
+        <div class="form-group">
+            <label for="comment">Enter a new message:</label>
+            <textarea name="text" class="form-control" rows="5" id="comment"></textarea>
+        </div>
+        <input class="btn btn-primary btn-lg btn-block" type="submit" value="Submit"/>
       </form>
+      <hr />
+
+      <div id="message-container">Loading...????</div>
+
+      <!-- About Me description -->
+      <div id="about-me-container">Loading...!!!!!</div>
+      <div id="about-me-form" style = "margin-bottom: 2em;"class="hidden">
+        <form action="/about" method="POST">
+          <div class="form-group">
+            <textarea name="about-me" placeholder="About me" class="form-control" rows="5" required></textarea>
+          </div>
+          <br />
+          <input class="btn btn-secondary btn-lg btn-block" type="submit" value="Submit">
+        </form>
+      </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
 </html>
