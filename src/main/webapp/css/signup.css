@@ -1,0 +1,94 @@
+body
+{
+    font-family: lato;
+    background-image: url(https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-600689.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+h1
+{
+    margin: 20px 0 0 0;
+    color: #2B618F;
+    text-align: center;
+    font-size: 35px;
+    -webkit-text-stroke-width: 0.5px;
+    -webkit-text-stroke-color: black;
+}
+
+.sign-up-form
+{
+    border-radius: 10px;
+    background-color: #77759C;
+    border: 4px solid #183041;
+    padding: 20px;
+    margin: 25px 350px 0 350px;
+
+}
+
+input[type=text], input[type=password], select, textarea
+{
+    width: 100%;
+    padding: 8px;
+    border: 1.5px solid #183041;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+
+input[type=submit]:hover
+{
+    box-shadow: 0px 4px 5px #7f5e6c, -2px 0px 5px #7f5e6c, 2px 0px 5px #7f5e6c;
+}
+
+.terms
+{
+    text-align: center;
+    display: block;
+    margin: 15px 0 0 0;
+}
+
+.already-user
+{
+    color: white;
+    text-align: center;
+    display: block;
+    margin: 10px 0 0 0;
+}
+
+.home {
+  background-color: white;
+  border: gray;
+  color: pink;
+  padding: 7px 7px;
+  float: right;
+  font-family: lato;
+  font-size: 25px;
+  border-radius: 12px;
+  line-height: : 30px;
+  height:40px;
+   position:absolute;
+    transition: .5s ease;
+    top: 3%;
+    left: 11%;
+  }
+
+.subbutton
+{
+    display: block;
+    margin: 5px auto;
+    text-align: center;
+    background-color: #CD98AF;
+    color: white;
+    font-size: 22px;
+    font-family: lato;
+    border: 2px solid #CD98AF;
+    border-radius: 10px;
+}
+
+.subbutton:hover
+{
+  text-shadow: 0px 4px 5px #7f5e6c, -2px 0px 5px #7f5e6c, 2px 0px 5px #7f5e6c;
+}
