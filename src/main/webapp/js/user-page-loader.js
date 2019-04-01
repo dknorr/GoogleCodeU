@@ -87,6 +87,11 @@ function buildMessageDiv(message) {
   headerDiv.appendChild(
     document.createTextNode(message.user + " - " + new Date(message.timestamp))
   );
+  headerDiv.appendChild(document.createTextNode(
+    message.user + ' - ' +
+    new Date(message.timestamp) + 
+    ' [' + message.sentimentScore + ']')
+  );
 
   const bodyDiv = document.createElement("div");
   bodyDiv.classList.add("message-body");
