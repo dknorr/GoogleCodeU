@@ -34,7 +34,16 @@ limitations under the License.
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/feed.html">Feed<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/map.html">Map<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/stats.html">Stats<span class="sr-only">(current)</span></a>
           </li>
         </ul>
       </div>
@@ -62,14 +71,16 @@ limitations under the License.
       </form>
       <hr />
 
-      <div id="message-container">Loading...????</div>
+      <div id="message-container">
+        Loading...????
+      </div>
 
       <!-- About Me description -->
       <div id="about-me-container">Loading...!!!!!</div>
       <div id="about-me-form" style = "margin-bottom: 2em;"class="hidden">
         <form action="/about" method="POST">
           <div class="form-group">
-            <textarea name="about-me" placeholder="About me" class="form-control" rows="5" required></textarea>
+            <textarea name="about-me" placeholder="More About me" class="form-control" rows="5" required></textarea>
           </div>
           <br />
           <input class="btn btn-secondary btn-lg btn-block" type="submit" value="Submit">
