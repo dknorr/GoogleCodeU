@@ -72,5 +72,6 @@ public class Message {
   
   /*public void setText(String translation){
     this.text = translation;
-  } */
+  } 
+  (Commented out for local testing -- is there another way to do this?) */
 }
