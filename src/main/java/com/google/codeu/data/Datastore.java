@@ -142,6 +142,11 @@ public class Datastore {
     return getMessagesHelper(results);
   }
 
+//  public List<Message> getConversation(String user1, String user2) {
+//    Query query = new Query("Message")
+//            .setFilter(new Query.FilterPredicate("recipient", FilterOperator.
+//  }
+
   public List<Message> getAllMessages() {
 
     Query query = new Query("Message").addSort("timestamp", SortDirection.DESCENDING);

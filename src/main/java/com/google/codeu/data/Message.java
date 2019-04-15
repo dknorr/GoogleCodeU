@@ -69,4 +69,8 @@ public class Message {
   public float getSentimentScore() {
     return sentimentScore;
   }
+  
+  /*public void setText(String translation){
+    this.text = translation;
+  } */
 }

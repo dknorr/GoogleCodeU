@@ -33,7 +33,10 @@ import com.google.cloud.language.v1.Document;
 import com.google.cloud.language.v1.Document.Type;
 import com.google.cloud.language.v1.LanguageServiceClient;
 import com.google.cloud.language.v1.Sentiment;
-
+/* import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.Translate.TranslateOption;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation; */
 
 /** Handles fetching and saving {@link Message} instances. */
 @WebServlet("/messages")
@@ -64,10 +67,16 @@ public class MessageServlet extends HttpServlet {
     }
 
     List<Message> messages = datastore.getMessages(user);
+    /* String targetLanguageCode = request.getParameter("language");
+
+    if(targetLanguageCode != null) {
+      translateMessages(messages, targetLanguageCode);
+    }*/
+    
     Gson gson = new Gson();
     String json = gson.toJson(messages);
 
-    response.getWriter().println(json);
+    response.getWriter().println(json); 
   }
 
   /** Stores a new {@link Message}. */
@@ -81,13 +90,13 @@ public class MessageServlet extends HttpServlet {
     }
 
     String user = userService.getCurrentUser().getEmail();
-    String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
+    String text = Jsoup.clean(request.getParameter("text"), Whitelist.relaxed());
 
     String recipient = request.getParameter("recipient");
-    float sentimentScore = getSentimentScore(text);
+    float sentimentScore = this.getSentimentScore(text);
 
-    if (request.getParameter(recipient) != "") {
-      response.sendRedirect("/user-page.html?user=" + recipient);
+    if (datastore.getUser(recipient) == null) {
+      response.sendRedirect("/user-page.html?user=" + user);
       return;
     }
 
@@ -95,9 +104,6 @@ public class MessageServlet extends HttpServlet {
     datastore.storeMessage(message);
     
     response.sendRedirect("/user-page.html?user=" + recipient);
-    /*
-    Message message = new Message(user, text, sentimentScore);
-    datastore.storeMessage(message); */
   }
 
   /* Sentiment Score */
@@ -111,4 +117,19 @@ public class MessageServlet extends HttpServlet {
 
   return sentiment.getScore();
   }
+  
 }
+
+/*  private void translateMessages(List<Message> messages, String targetLanguageCode) {
+    Translate translate = TranslateOptions.getDefaultInstance().getService();
+  
+    for(Message message : messages) {
+      String originalText = message.getText();
+  
+      Translation translation =
+          translate.translate(originalText, TranslateOption.targetLanguage(targetLanguageCode));
+      String translatedText = translation.getTranslatedText();
+        
+      message.setText(translatedText);
+    }    
+  } */
