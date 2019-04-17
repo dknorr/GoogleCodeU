@@ -76,6 +76,26 @@ function fetchMessages() {
     });
 }
 
+function fetchConversation(recipient) {
+  const url = "/conversation?user=" + parameterUsername + "?recipient=" + recipient;
+  fetch(url)
+      .then(response => {
+        return response.json();
+      })
+      .then(conversation => {
+        const conversationContainer = document.getElementById("conversation-container");
+        if(conversation.length == 0) {
+          conversationContainer.innerHTML = "<p>No messages with thus user yet.</p>";
+        } else {
+          conversationContainer.innerHTML = "";
+        }
+        conversation.forEach(message => {
+          const messageDiv = buildMessageDiv(message);
+          conversationContainer.appendChild(messageDiv);
+        })
+      })
+}
+
 /**
  * Builds an element that displays the message.
  * @param {Message} message
@@ -145,4 +165,9 @@ function buildUI() {
   showMessageForm();
   fetchMessages();
   fetchAboutMe();
+}
+
+function buildConvoUI(recipient) {
+  showMessageForm();
+  fetchConversation(recipient);
 }
