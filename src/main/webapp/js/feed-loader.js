@@ -1,6 +1,15 @@
+
+const urlParams = new URLSearchParams(window.location.search)
+
 // Fetch messages and add them to the page.
 function fetchMessages(){
-    const url = '/feed';
+    const parameterLanguage = urlParams.get('language');
+    let url = '/feed?';
+
+    if(parameterLanguage) {
+        url += 'language=' + parameterLanguage;
+    }
+
     fetch(url)
       .then((response) => {
         return response.json();
@@ -45,8 +54,30 @@ function fetchMessages(){
     
     return messageDiv;
   }
+
+  function buildLanguageLinks(){
+    let url = '/feed.html?'
+    const languagesListElement  = document.getElementById("languages");
+    languagesListElement.appendChild(createLink(
+        url + 'language=en', 'English'));
+    languagesListElement.appendChild(createLink(
+        url + 'language=zh', 'Chinese'));
+    languagesListElement.appendChild(createLink(
+        url + 'language=hi', 'Hindi'));
+    languagesListElement.appendChild(createLink(
+        url + 'language=es', 'Spanish'));
+    languagesListElement.appendChild(createLink(
+        url + 'language=ar', 'Arabic'));
+        
+    var elements = languagesListElement.childNodes;
+    for (var i = 1;i < elements.length;i++){
+      var current = elements[i];
+      current.classList.add("dropdown-item");
+    }
+  }
   
   // Fetch data and populate the UI of the page.
   function buildUI(){
-   fetchMessages();
+    buildLanguageLinks();
+    fetchMessages();
   }

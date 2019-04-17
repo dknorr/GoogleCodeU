@@ -12,6 +12,11 @@ import com.google.codeu.data.Datastore;
 import com.google.codeu.data.Message;
 import com.google.gson.Gson;
 
+import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.Translate.TranslateOption;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation;
+
 /**
  * Handles fetching all messages for the public feed.
  */
@@ -33,10 +38,31 @@ public class MessageFeedServlet extends HttpServlet {
 
     response.setContentType("application/json");
 
+    String targetLanguageCode = request.getParameter("language");
     List<Message> messages = datastore.getAllMessages();
+    
+
+    if(targetLanguageCode != null) {
+      translateMessages(messages, targetLanguageCode);
+    }
+
     Gson gson = new Gson();
     String json = gson.toJson(messages);
 
     response.getOutputStream().println(json);
+  }
+
+  private void translateMessages(List<Message> messages, String targetLanguageCode) {
+    Translate translate = TranslateOptions.getDefaultInstance().getService();
+  
+    for(Message message : messages) {
+      String originalText = message.getText();
+  
+      Translation translation =
+          translate.translate(originalText, TranslateOption.targetLanguage(targetLanguageCode));
+      String translatedText = translation.getTranslatedText();
+        
+      message.setText(translatedText);
+    }    
   }
 }
